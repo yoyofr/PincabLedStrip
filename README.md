@@ -11,7 +11,7 @@ Your **cabinet.xml** file needs to be adapted to use a 2Mbs serial connection
 
     //Defines the number of ledstrip
 	#define NUMBER_LEDSTRIP 4
-	define LEDSTRIP_LENGTH1 70*6 //backboard
+	#define LEDSTRIP_LENGTH1 70*6 //backboard
     #define LEDSTRIP_LENGTH2 24*2 //speakers ring
     #define LEDSTRIP_LENGTH3 117 //sideboard left
     #define LEDSTRIP_LENGTH4 117 //sideboard right
