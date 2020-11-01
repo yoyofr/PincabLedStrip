@@ -27,7 +27,7 @@ FASTLED_USING_NAMESPACE
 //Defines the max number of ledstrip which is allowed per ledstrip.
 #define MaxLedsPerStrip 1024
 //Defines the number of ledstrip
-#define NUMBER_LEDSTRIP 4
+#define NUMBER_LEDSTRIP 6
 //Defines the size / ledstrip (optimize speed/reactivity)
 #define LEDSTRIP_LENGTH1 70*6 //backboard
 #define LEDSTRIP_LENGTH2 24*2 //speakers ring
@@ -38,13 +38,13 @@ FASTLED_USING_NAMESPACE
 
 
 //Defines Brightness
-#define BRIGHTNESS  255 // Defines Brightness in RGB boot sequence
-#define BRIGHTNESS_PIN1 255 // Defines Brightness in pin 1 (0 to 255)
-#define BRIGHTNESS_PIN2 255 // Defines Brightness in pin 2 (0 to 255)
-#define BRIGHTNESS_PIN3 255 // Defines Brightness in pin 3 (0 to 255)
-#define BRIGHTNESS_PIN4 255 // Defines Brightness in pin 4 (0 to 255)
-#define BRIGHTNESS_PIN5 255 // Defines Brightness in pin 5 (0 to 255)
-#define BRIGHTNESS_PIN6 255 // Defines Brightness in pin 6 (0 to 255)
+#define BRIGHTNESS 16 // Defines Brightness in RGB boot sequence
+#define BRIGHTNESS_PIN1 16 // Defines Brightness in pin 1 (0 to 255)
+#define BRIGHTNESS_PIN2 16 // Defines Brightness in pin 2 (0 to 255)
+#define BRIGHTNESS_PIN3 16 // Defines Brightness in pin 3 (0 to 255)
+#define BRIGHTNESS_PIN4 16 // Defines Brightness in pin 4 (0 to 255)
+#define BRIGHTNESS_PIN5 16 // Defines Brightness in pin 5 (0 to 255)
+#define BRIGHTNESS_PIN6 16 // Defines Brightness in pin 6 (0 to 255)
 /*************   END VALUE TO CHANGE  *******************/
 
 class LedStrip {
@@ -74,6 +74,9 @@ class LedStrip {
 
   private:
     static uint16_t stripLen;
+    static uint16_t stripStartOffset[NUMBER_LEDSTRIP];
+    static uint8_t stripIndex[NUMBER_LEDSTRIP*MaxLedsPerStrip];
+
 };
 
 #endif

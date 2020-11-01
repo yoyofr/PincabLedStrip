@@ -20,7 +20,7 @@ static WifiDebug wifidebug;
 #include "LedStrip.h"
 
 #define FirmwareVersionMajor 1
-#define FirmwareVersionMinor 1
+#define FirmwareVersionMinor 2
 
 //Defines the Pinnumber to which the built in led
 #define LedPin D4
@@ -36,7 +36,7 @@ uint32_t configuredStripLength = MaxLedsPerStrip;
 
 //Setup of the system. Is called once on startup.
 void setup() {
-  Serial.begin(921600);
+  Serial.begin(2000000);//921600);
   while (Serial.available()) {
     Serial.read();
   };
