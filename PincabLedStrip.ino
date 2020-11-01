@@ -66,22 +66,22 @@ void setup() {
   /****/
   ClearAllLedData();
   ledstrip.show();
-  for (uint32_t i = 0; i < configuredStripLength; i++) {
-    ledstrip.setPixel(i, 255, 0, 0);
+for (uint32_t i = 0; i < configuredStripLength* NUMBER_LEDSTRIP; i++) {
+  ledstrip.setPixel(i, BRIGHTNESS, 0, 0);
   }
   ledstrip.show();
   FastLED.delay(200);
   ClearAllLedData();
   ledstrip.show();
-  for (uint32_t i = 0; i < configuredStripLength; i++) {
-    ledstrip.setPixel(i, 0, 255, 0);
+  for (uint32_t i = 0; i < configuredStripLength* NUMBER_LEDSTRIP; i++) {
+    ledstrip.setPixel(i, 0, BRIGHTNESS, 0);
   }
   ledstrip.show();
   FastLED.delay(200);
   ClearAllLedData();
   ledstrip.show();
-  for (uint32_t i = 0; i < configuredStripLength; i++) {
-    ledstrip.setPixel(i, 0, 0, 255);
+  for (uint32_t i = 0; i < configuredStripLength* NUMBER_LEDSTRIP; i++) {
+    ledstrip.setPixel(i, 0, 0, BRIGHTNESS);
   }
   ledstrip.show();
   FastLED.delay(200);
@@ -208,10 +208,11 @@ void Fill() {
   word numberOfLeds = ReceiveWord();
   int ColorData = ReceiveColorData();
   if ( firstLed <= configuredStripLength * NUMBER_LEDSTRIP && numberOfLeds > 0 && firstLed + numberOfLeds - 1 <= configuredStripLength * NUMBER_LEDSTRIP ) {
-    word endLedNr = firstLed + numberOfLeds;
+    ledstrip.setPixels(firstLed,numberOfLeds,ColorData);
+    /*word endLedNr = firstLed + numberOfLeds;
     for (word ledNr = firstLed; ledNr < endLedNr; ledNr++) {
       ledstrip.setPixel(ledNr, ColorData);
-    }
+    }*/
     Ack();
   } else {
     //Number of the first led or the number of ledstrip to receive is outside the allowed range
@@ -256,9 +257,10 @@ void SetLedStripLength() {
 
 //Clears the data for all configured ledstrip
 void  ClearAllLedData() {
-  for (word ledNr = 0; ledNr < configuredStripLength * NUMBER_LEDSTRIP; ledNr++) {
+  /*for (word ledNr = 0; ledNr < configuredStripLength * NUMBER_LEDSTRIP; ledNr++) {
     ledstrip.setPixel(ledNr, 0);
-  }
+  }*/
+  ledstrip.clearAll();
   Ack();
 }
 
