@@ -33,7 +33,7 @@ FASTLED_USING_NAMESPACE
 #define LEDSTRIP_LENGTH2 24*2 //speakers ring
 #define LEDSTRIP_LENGTH3 117 //sideboard left
 #define LEDSTRIP_LENGTH4 117 //sideboard right
-#define LEDSTRIP_LENGTH5 0 //undercab+backbox
+#define LEDSTRIP_LENGTH5 164 //undercab+backbox
 #define LEDSTRIP_LENGTH6 0 //N/A
 
 
@@ -43,7 +43,7 @@ FASTLED_USING_NAMESPACE
 #define BRIGHTNESS_PIN2 16 // Defines Brightness in pin 2 (0 to 255)
 #define BRIGHTNESS_PIN3 16 // Defines Brightness in pin 3 (0 to 255)
 #define BRIGHTNESS_PIN4 16 // Defines Brightness in pin 4 (0 to 255)
-#define BRIGHTNESS_PIN5 16 // Defines Brightness in pin 5 (0 to 255)
+#define BRIGHTNESS_PIN5 128 // Defines Brightness in pin 5 (0 to 255)
 #define BRIGHTNESS_PIN6 16 // Defines Brightness in pin 6 (0 to 255)
 /*************   END VALUE TO CHANGE  *******************/
 
