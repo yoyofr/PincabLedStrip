@@ -29,12 +29,12 @@ FASTLED_USING_NAMESPACE
 //Defines the number of ledstrip
 #define NUMBER_LEDSTRIP 6
 //Defines the size / ledstrip (optimize speed/reactivity)
-#define LEDSTRIP_LENGTH1 70*6 //backboard
-#define LEDSTRIP_LENGTH2 24*2 //speakers ring
-#define LEDSTRIP_LENGTH3 117 //sideboard left
-#define LEDSTRIP_LENGTH4 117 //sideboard right
-#define LEDSTRIP_LENGTH5 164 //undercab+backbox
-#define LEDSTRIP_LENGTH6 0 //N/A
+#define LEDSTRIP_LENGTH1 1024 //70*6 //backboard
+#define LEDSTRIP_LENGTH2 1024 //24*2 //speakers ring
+#define LEDSTRIP_LENGTH3 1024 //117 //sideboard left
+#define LEDSTRIP_LENGTH4 1024 //117 //sideboard right
+#define LEDSTRIP_LENGTH5 1024 //164 //undercab+backbox
+#define LEDSTRIP_LENGTH6 1024 //64 //N/A
 
 
 //Defines Brightness
@@ -43,8 +43,8 @@ FASTLED_USING_NAMESPACE
 #define BRIGHTNESS_PIN2 16 // Defines Brightness in pin 2 (0 to 255)
 #define BRIGHTNESS_PIN3 16 // Defines Brightness in pin 3 (0 to 255)
 #define BRIGHTNESS_PIN4 16 // Defines Brightness in pin 4 (0 to 255)
-#define BRIGHTNESS_PIN5 128 // Defines Brightness in pin 5 (0 to 255)
-#define BRIGHTNESS_PIN6 16 // Defines Brightness in pin 6 (0 to 255)
+#define BRIGHTNESS_PIN5 96 // Defines Brightness in pin 5 (0 to 255)
+#define BRIGHTNESS_PIN6 96 // Defines Brightness in pin 6 (0 to 255)
 /*************   END VALUE TO CHANGE  *******************/
 
 class LedStrip {
@@ -52,6 +52,7 @@ class LedStrip {
     LedStrip(uint32_t numPerStrip);
     void begin(void);
 
+    void addNewStrip(uint8_t index,uint16_t length);
     void setStripLength(uint16_t length);
     void clearAll();
     void setPixels(uint32_t start_num,uint16_t len,int color);
@@ -65,7 +66,7 @@ class LedStrip {
     int busy(void);
 
     int numPixels(void) {
-      return stripLen * 8;
+      return stripTotalLen * 8;
     }
     int color(uint8_t red, uint8_t green, uint8_t blue) {
       return (red << 16) | (green << 8) | blue;
@@ -73,7 +74,8 @@ class LedStrip {
 
 
   private:
-    static uint16_t stripLen;
+    static uint16_t stripTotalLen;
+    static uint16_t stripLen[NUMBER_LEDSTRIP];
     static uint16_t stripStartOffset[NUMBER_LEDSTRIP];
     static uint8_t stripIndex[NUMBER_LEDSTRIP*MaxLedsPerStrip];
 

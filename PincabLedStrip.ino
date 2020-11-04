@@ -100,6 +100,10 @@ void loop() {
     receivedByte = Serial.read();
 
     switch (receivedByte) {
+      case 'Z':
+        //Set length of a strip
+        SetALedStripLength();
+        break;
       case 'L':
         //Set length of strips
         SetLedStripLength();
@@ -254,6 +258,25 @@ void SetLedStripLength() {
     Ack();
   }
 }
+
+
+//Sets the length of a led strip
+void SetALedStripLength() {
+  while (!Serial.available()) {};
+  byte indexStrip = Serial.read();  while (!Serial.available()) {};
+  byte lastStrip = Serial.read();
+  while (!Serial.available()) {};
+  word stripLength = ReceiveWord();
+  if (stripLength < 1 || stripLength > MaxLedsPerStrip || indexStrip<0 || indexStrip>=NUMBER_LEDSTRIP ) {
+    //stripLength is either to small or above the max number of ledstrip allowed or strip index is not within existing range
+    Nack();
+  } else {
+    //stripLength is in the valid range
+    ledstrip.addNewStrip(indexStrip,stripLength);
+    Ack();
+  }
+}
+
 
 //Clears the data for all configured ledstrip
 void  ClearAllLedData() {
