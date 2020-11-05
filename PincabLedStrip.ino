@@ -267,10 +267,10 @@ void SetALedStripLength() {
   byte lastStrip = Serial.read();
   while (!Serial.available()) {};
   word stripLength = ReceiveWord();
-  if (stripLength < 1 || stripLength > MaxLedsPerStrip || indexStrip<0 || indexStrip>=NUMBER_LEDSTRIP ) {
+  /*if (stripLength < 1 || stripLength > MaxLedsPerStrip ) {
     //stripLength is either to small or above the max number of ledstrip allowed or strip index is not within existing range
     Nack();
-  } else {
+  } else*/ {
     //stripLength is in the valid range
     ledstrip.addNewStrip(indexStrip,stripLength);
     Ack();

@@ -39,12 +39,12 @@ FASTLED_USING_NAMESPACE
 
 //Defines Brightness
 #define BRIGHTNESS 16 // Defines Brightness in RGB boot sequence
-#define BRIGHTNESS_PIN1 16 // Defines Brightness in pin 1 (0 to 255)
-#define BRIGHTNESS_PIN2 16 // Defines Brightness in pin 2 (0 to 255)
-#define BRIGHTNESS_PIN3 16 // Defines Brightness in pin 3 (0 to 255)
-#define BRIGHTNESS_PIN4 16 // Defines Brightness in pin 4 (0 to 255)
-#define BRIGHTNESS_PIN5 96 // Defines Brightness in pin 5 (0 to 255)
-#define BRIGHTNESS_PIN6 96 // Defines Brightness in pin 6 (0 to 255)
+#define BRIGHTNESS_PIN1 255 // Defines Brightness in pin 1 (0 to 255)
+#define BRIGHTNESS_PIN2 255 // Defines Brightness in pin 2 (0 to 255)
+#define BRIGHTNESS_PIN3 255 // Defines Brightness in pin 3 (0 to 255)
+#define BRIGHTNESS_PIN4 255 // Defines Brightness in pin 4 (0 to 255)
+#define BRIGHTNESS_PIN5 255 // Defines Brightness in pin 5 (0 to 255)
+#define BRIGHTNESS_PIN6 255 // Defines Brightness in pin 6 (0 to 255)
 /*************   END VALUE TO CHANGE  *******************/
 
 class LedStrip {

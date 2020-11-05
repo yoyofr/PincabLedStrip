@@ -41,7 +41,7 @@ void LedStrip::begin(void) {
 }
 
 void LedStrip::addNewStrip(uint8_t index,uint16_t length) {
-  FastLED[index].setLeds(leds[index],length);
+  if ((index>=0)&&(index<NUMBER_LEDSTRIP)&&length&&(length<MaxLedsPerStrip)) FastLED[index].setLeds(leds[index],length);
 }
 
 void LedStrip::show(void)
