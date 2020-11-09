@@ -28,13 +28,7 @@ FASTLED_USING_NAMESPACE
 #define MaxLedsPerStrip 1024
 //Defines the number of ledstrip
 #define NUMBER_LEDSTRIP 6
-//Defines the size / ledstrip (optimize speed/reactivity)
-#define LEDSTRIP_LENGTH1 1024 //70*6 //backboard
-#define LEDSTRIP_LENGTH2 1024 //24*2 //speakers ring
-#define LEDSTRIP_LENGTH3 1024 //117 //sideboard left
-#define LEDSTRIP_LENGTH4 1024 //117 //sideboard right
-#define LEDSTRIP_LENGTH5 1024 //164 //undercab+backbox
-#define LEDSTRIP_LENGTH6 1024 //64 //N/A
+
 
 
 //Defines Brightness

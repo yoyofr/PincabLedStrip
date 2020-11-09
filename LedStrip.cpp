@@ -22,26 +22,32 @@ LedStrip::LedStrip(uint32_t numPerStrip)
 void LedStrip::begin(void) {
   int offset=0;
   for (int j=0;j<NUMBER_LEDSTRIP;j++) {
+    stripLen[index]=MaxLedsPerStrip;
     stripStartOffset[j]=offset;
     for (int i=0;i<stripTotalLen;i++) stripIndex[offset++]=j;
   } 
-  if (LEDSTRIP_LENGTH1) FastLED.addLeds<LED_TYPE, DATA_PIN1, COLOR_ORDER>(leds[0], LEDSTRIP_LENGTH1).setCorrection(CRGB(BRIGHTNESS_PIN1,BRIGHTNESS_PIN1,BRIGHTNESS_PIN1) );
-  if (LEDSTRIP_LENGTH2) FastLED.addLeds<LED_TYPE, DATA_PIN2, COLOR_ORDER>(leds[1], LEDSTRIP_LENGTH2).setCorrection(CRGB(BRIGHTNESS_PIN2,BRIGHTNESS_PIN2,BRIGHTNESS_PIN2) );
+  if (LEDSTRIP_LENGTH1) FastLED.addLeds<LED_TYPE, DATA_PIN1, COLOR_ORDER>(leds[0], MaxLedsPerStrip).setCorrection(CRGB(BRIGHTNESS_PIN1,BRIGHTNESS_PIN1,BRIGHTNESS_PIN1) );
+  if (LEDSTRIP_LENGTH2) FastLED.addLeds<LED_TYPE, DATA_PIN2, COLOR_ORDER>(leds[1], MaxLedsPerStrip).setCorrection(CRGB(BRIGHTNESS_PIN2,BRIGHTNESS_PIN2,BRIGHTNESS_PIN2) );
   if (NUMBER_LEDSTRIP > 2)
-    if (LEDSTRIP_LENGTH3) FastLED.addLeds<LED_TYPE, DATA_PIN3, COLOR_ORDER>(leds[2], LEDSTRIP_LENGTH3).setCorrection(CRGB(BRIGHTNESS_PIN3,BRIGHTNESS_PIN3,BRIGHTNESS_PIN3) );
+    if (LEDSTRIP_LENGTH3) FastLED.addLeds<LED_TYPE, DATA_PIN3, COLOR_ORDER>(leds[2], MaxLedsPerStrip).setCorrection(CRGB(BRIGHTNESS_PIN3,BRIGHTNESS_PIN3,BRIGHTNESS_PIN3) );
   if (NUMBER_LEDSTRIP > 3)
-    if (LEDSTRIP_LENGTH4) FastLED.addLeds<LED_TYPE, DATA_PIN4, COLOR_ORDER>(leds[3], LEDSTRIP_LENGTH4).setCorrection(CRGB(BRIGHTNESS_PIN4,BRIGHTNESS_PIN4,BRIGHTNESS_PIN4) );
+    if (LEDSTRIP_LENGTH4) FastLED.addLeds<LED_TYPE, DATA_PIN4, COLOR_ORDER>(leds[3], MaxLedsPerStrip).setCorrection(CRGB(BRIGHTNESS_PIN4,BRIGHTNESS_PIN4,BRIGHTNESS_PIN4) );
   if (NUMBER_LEDSTRIP > 4)
-    if (LEDSTRIP_LENGTH5) FastLED.addLeds<LED_TYPE, DATA_PIN5, COLOR_ORDER>(leds[4], LEDSTRIP_LENGTH5).setCorrection(CRGB(BRIGHTNESS_PIN5,BRIGHTNESS_PIN5,BRIGHTNESS_PIN5) );
+    if (LEDSTRIP_LENGTH5) FastLED.addLeds<LED_TYPE, DATA_PIN5, COLOR_ORDER>(leds[4], MaxLedsPerStrip).setCorrection(CRGB(BRIGHTNESS_PIN5,BRIGHTNESS_PIN5,BRIGHTNESS_PIN5) );
   if (NUMBER_LEDSTRIP > 5)
-    if (LEDSTRIP_LENGTH6) FastLED.addLeds<LED_TYPE, DATA_PIN6, COLOR_ORDER>(leds[5], LEDSTRIP_LENGTH6).setCorrection(CRGB(BRIGHTNESS_PIN6,BRIGHTNESS_PIN6,BRIGHTNESS_PIN6) );
+    if (LEDSTRIP_LENGTH6) FastLED.addLeds<LED_TYPE, DATA_PIN6, COLOR_ORDER>(leds[5], MaxLedsPerStrip).setCorrection(CRGB(BRIGHTNESS_PIN6,BRIGHTNESS_PIN6,BRIGHTNESS_PIN6) );
 
   //FastLED.setBrightness( BRIGHTNESS );
   FastLED.setDither( 0 );
 }
 
 void LedStrip::addNewStrip(uint8_t index,uint16_t length) {
-  if ((index>=0)&&(index<NUMBER_LEDSTRIP)&&length&&(length<MaxLedsPerStrip)) FastLED[index].setLeds(leds[index],length);
+  if ((index>=0)&&(index<NUMBER_LEDSTRIP)) {
+    if (length>=MaxLedsPerStrip) length=MaxLedsPerStrip-1;
+    if (!length) length=1; //to confirm if really required or not
+    stripLen[index]=length;
+    FastLED[index].setLeds(leds[index],length);
+  }
 }
 
 void LedStrip::show(void)
@@ -60,12 +66,7 @@ void LedStrip::setStripLength(uint16_t length)
 }
 
 void LedStrip::clearAll() {
-  if (LEDSTRIP_LENGTH1) memset( &leds[0], 0, LEDSTRIP_LENGTH1* sizeof( CRGB) );
-  if (LEDSTRIP_LENGTH2) memset( &leds[1], 0, LEDSTRIP_LENGTH2* sizeof( CRGB) );
-  if (LEDSTRIP_LENGTH3) memset( &leds[2], 0, LEDSTRIP_LENGTH3* sizeof( CRGB) );
-  if (LEDSTRIP_LENGTH4) memset( &leds[3], 0, LEDSTRIP_LENGTH4* sizeof( CRGB) );
-  if (LEDSTRIP_LENGTH5) memset( &leds[4], 0, LEDSTRIP_LENGTH5* sizeof( CRGB) );
-  if (LEDSTRIP_LENGTH6) memset( &leds[5], 0, LEDSTRIP_LENGTH6* sizeof( CRGB) );
+  FastLED.clear();
 }
 
 void LedStrip::setPixels(uint32_t start_num,uint16_t len,int color)
@@ -78,6 +79,8 @@ void LedStrip::setPixels(uint32_t start_num,uint16_t len,int color)
   strip = stripIndex[start_num];//start_num / stripLen;
   offset = start_num-stripStartOffset[strip];// % stripLen;
 
+  if (offset+len>stripLen[strip]) return;
+  
   for (uint16_t i=len;i;i--) {
     leds[strip][offset].b = b;
     leds[strip][offset].g = g;
@@ -97,6 +100,8 @@ void LedStrip::setPixel(uint32_t num, int color)
   strip = stripIndex[num];//start_num / stripLen;
   offset = num-stripStartOffset[strip];// % stripLen;
 
+  if (offset>=stripLen[strip]) return;
+
   leds[strip][offset].b = (color & 0xFF); // Take just the lowest 8 bits.
   leds[strip][offset].g = ((color >> 8) & 0xFF); // Shift the integer right 8 bits.
   leds[strip][offset].r = ((color >> 16) & 0xFF); // Shift the integer right 8 bits.
@@ -108,6 +113,8 @@ int LedStrip::getPixel(uint32_t num)
 
   strip = stripIndex[num];//start_num / stripLen;
   offset = num-stripStartOffset[strip];// % stripLen;
+
+  if (offset>=stripLen[strip]) return 0;
   
   return leds[strip][offset];
 }
