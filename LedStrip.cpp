@@ -22,7 +22,7 @@ LedStrip::LedStrip(uint32_t numPerStrip)
 void LedStrip::begin(void) {
   int offset=0;
   for (int j=0;j<NUMBER_LEDSTRIP;j++) {
-    stripLen[index]=MaxLedsPerStrip;
+    stripLen[j]=MaxLedsPerStrip;
     stripStartOffset[j]=offset;
     for (int i=0;i<stripTotalLen;i++) stripIndex[offset++]=j;
   } 
