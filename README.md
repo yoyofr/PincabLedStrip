@@ -3,7 +3,7 @@ A fork of https://github.com/aetios50/PincabLedStrip improving significantly per
 Still a WIP.
 
 # Important notes
-Currently requires a patched DOF, the below won't work on existing one.
+Currently requires a patched DOF, the below won't work on existing one. Please use the **DirectOutput.DLL** from this repository
 
 Your **cabinet.xml** file needs to be adapted to use a 2Mbs serial connection & to activate a new feature (PerLedstripLength)
 
